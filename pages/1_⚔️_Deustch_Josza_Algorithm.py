@@ -113,6 +113,10 @@ def run_on_real_backend(provider_api_key, backend):
 
 
 # ########## Use the DJ Algorithm ##########
+
+# Page Config
+st.set_page_config(page_title='Deustch Josza Algorithm - Unravel Quantum', page_icon="⚔️", layout='wide')
+
 st.title("Deustch Josza Algorithm")
 
 n = st.slider("Select the number of qubits (n)", 1, 10, 3)

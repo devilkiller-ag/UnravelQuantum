@@ -1,6 +1,6 @@
 import streamlit as st
 
-# Confit
+# Page Config
 st.set_page_config(page_title='Unravel Quantum', page_icon=":cat:", layout='wide')
 
 
