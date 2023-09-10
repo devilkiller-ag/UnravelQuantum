@@ -1,15 +1,18 @@
 # ########## Import Initialisation ############
 from qiskit import QuantumCircuit, BasicAer, Aer, execute
-from qiskit.visualization import plot_histogram
+from qiskit.visualization import plot_histogram, circuit_drawer
 from qiskit.tools import job_monitor
 from qiskit import IBMQ
 import streamlit as st
 import matplotlib.pyplot as plt
-
+from random import choice
 # #############################################
 
 
 # ########## Deustch Josza Algorithm ##########
+def generate_bitstring(n):
+    return "".join(choice("01") for _ in range(n))
+
 def ConstantFunctionOracale(n, output):
     oracle = QuantumCircuit(n + 1)  # n input qubits, 1 ancillia qubit for |->
     if output == 0:
@@ -21,8 +24,8 @@ def ConstantFunctionOracale(n, output):
     else:
         return "Error: Invalid function output"
 
-
-def BalancedFunctionOracle(n, xGatesString, cxGatesString):
+def BalancedFunctionOracle(n):
+    xGatesString = cxGatesString = generate_bitstring(n)
     if len(xGatesString) != n:
         return "Error: Invalid length of X Gate String"
     if len(cxGatesString) != n:
@@ -89,8 +92,8 @@ def RunCircuit(circuit, provider, backend_name, shots=1024):
     return counts
 
 
-def run_on_simulator(provider, backend):
-    answer = RunCircuit(dj_circuit, provider, backend, shots=1024)
+def run_on_simulator(circuit, provider, backend):
+    answer = RunCircuit(circuit, provider, backend, shots=1024)
     st.subheader("Result Counts:")
     st.write(answer)  # Display result counts as text
     st.subheader("Histogram:")
@@ -99,11 +102,11 @@ def run_on_simulator(provider, backend):
     st.pyplot(fig)  # Display the Matplotlib figure using st.pyplot
 
 
-def run_on_real_backend(provider_api_key, backend):
+def run_on_real_backend(circuit, provider_api_key, backend):
     IBMQ.save_account(provider_api_key, overwrite=True)
     provider = IBMQ.load_account()
     # backend = 'ibm_perth'
-    answer = RunCircuit(dj_circuit, provider, backend, shots=1024)
+    answer = RunCircuit(circuit, provider, backend, shots=1024)
     st.subheader("Result Counts:")
     st.write(answer)  # Display result counts as text
     st.subheader("Histogram:")
@@ -124,12 +127,17 @@ st.write(f"Selected number of qubits: {n}")
 
 f0allx = ConstantFunctionOracale(n, 0)
 f1allx = ConstantFunctionOracale(n, 1)
-f01half = BalancedFunctionOracle(n, "101", "101")
+f01half = BalancedFunctionOracle(n)
 
 functions = {"Constant Function (f(x) = 0)": f0allx, "Constant Function (f(x) = 1)": f1allx, "Balanced Function": f01half}
 selected_function = st.selectbox("Select the type of function", list(functions.keys()))
 
 dj_circuit = DeustchJoszaAlgo(n, functions[selected_function])
+
+st.write("**Circuit**")
+fig, ax = plt.subplots()
+circuit_drawer(dj_circuit, output='mpl', ax=ax) # Display the circuit using Matplotlib
+st.pyplot(fig) # Show the Matplotlib figure in Streamlit
 
 providers = {"Basic Aer": BasicAer, "Aer": Aer}
 selected_provider = st.selectbox("Select Provider", list(providers.keys()))
@@ -138,14 +146,14 @@ selected_backend = st.selectbox("Select Backend", list(backends))
 
 if st.button("Run on Simulator"):
     if selected_provider in providers:
-        run_on_simulator(providers[selected_provider], str(selected_backend))
+        run_on_simulator(dj_circuit, providers[selected_provider], str(selected_backend))
 
 # provider_api_key = st.text_input("Enter your IBM Quantum Experience API Key (for real backend)")
 
 # if st.button("Run on Real Backend") and provider_api_key:
 #     backends = IBMQ.backends()
 #     selected_backend = st.selectbox("Select Backend", list(backends))
-#     run_on_real_backend(provider_api_key, selected_backend)
+#     run_on_real_backend(dj_circuit, provider_api_key, selected_backend)
 
 
 # ################################### Show the Implementation #########################################
@@ -229,28 +237,36 @@ def RunCircuit(circuit, provider, backend_name, shots=1024):
     return counts
 
 
-def run_on_simulator(provider, backend, shots=1024):
-    answer = RunCircuit(dj_circuit, provider, backend, shots)
+def run_on_simulator(circuit, provider, backend, shots=1024):
+    answer = RunCircuit(circuit, provider, backend, shots)
     plot_histogram(answer)
     return answer
 
 
-def run_on_real_backend(provider_api_key, backend, shots=1024):
+def run_on_real_backend(circuit, provider_api_key, backend, shots=1024):
     IBMQ.save_account(provider_api_key, overwrite=True)
     provider = IBMQ.load_account()
-    answer = RunCircuit(dj_circuit, provider, backend, shots)
+    answer = RunCircuit(circuit, provider, backend, shots)
     plot_histogram(answer)
     return answer
+
+# Create DJ Circuit
+f0allx = ConstantFunctionOracale(n, 0)
+f1allx = ConstantFunctionOracale(n, 1)
+f01half = BalancedFunctionOracle(n, "101", "101")
+
+dj_circuit = DeustchJoszaAlgo(n, f01half)
+dj_circuit.draw('mpl')
 
 # Run on the simulator
 provider = BasicAer
 backend = 'qasm_simulator'
-run_on_simulator(provider, backend, shots=1024)
+run_on_simulator(dj_circuit, provider, backend, shots=1024)
 
 # Run on the real backend
 # provider_api_key = # your provider api key 
 backend = 'ibm_perth'
-# run_on_real_backend(provider_api_key, backend, shots=1024)
+# run_on_real_backend(dj_circuit, provider_api_key, backend, shots=1024)
 '''
 
 st.subheader("Implementation of Deustch Jasza Algorithm")

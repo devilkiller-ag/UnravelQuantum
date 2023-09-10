@@ -40,4 +40,4 @@ with c4:
 with c5:
     st.info('**Twitter: [@jaisarita](https://github.com/devilkiller-ag)**', icon="🐤")
 with c6:
-    st.info('**Hasnode: [jaisarita](https://jaisarita.hashnode.dev/)**', icon="✍🏻")
+    st.info('**Hashnode: [jaisarita](https://jaisarita.hashnode.dev/)**', icon="✍🏻")
