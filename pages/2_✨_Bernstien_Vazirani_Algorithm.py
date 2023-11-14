@@ -6,8 +6,6 @@ from qiskit import IBMQ
 import streamlit as st
 import matplotlib.pyplot as plt
 from random import choice
-import pandas as pd
-import numpy as np
 
 # #############################################
 
