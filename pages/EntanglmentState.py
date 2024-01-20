@@ -72,16 +72,16 @@ if st.button("Generate State"):
 
 
 
-st.subheader("Implementation of Bernstein Vazirani Algorithm")
+st.subheader("Implementation of Entanglement State")
 
-st.write(
-    """
-Reference:
- - [Bernstein Vazirani Algorithm - Q-munity](https://www.qmunity.tech/tutorials/bernstein-vazirani-algorithm)
-"""
-)
+# st.write(
+#     """
+# Reference:
+#  - [Bernstein Vazirani Algorithm - Q-munity](https://www.qmunity.tech/tutorials/bernstein-vazirani-algorithm)
+# """
+# )
 
-st.code(bv_algo_code, language="python")
+
 
 # ################################### About the author #########################################
 st.subheader("About the author: [Gaurang Belekar]")
