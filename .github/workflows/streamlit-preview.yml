@@ -1,9 +1,10 @@
 name: Streamlit Pull Request Preview
 
 on:
-  pull_request:
-    branches: 
-      - main
+  pull_request_target:
+    types:
+      - opened
+      - synchronize
 
 jobs:
   deploy:
