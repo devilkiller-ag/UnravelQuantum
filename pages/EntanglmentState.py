@@ -182,7 +182,7 @@ For more information on GHZ states and their applications in quantum computing, 
 # ################################### About the author #########################################
 st.subheader("About the Author")
 
-st.image('../images/Gaurang-Belekar.png', caption='Gaurang Belekar',width =200)
+st.image('images/Gaurang-Belekar.png', caption='Gaurang Belekar',width =200)
 
 # st.sidebar.markdown("""
 # Gaurang Belekar is a Quantum Computing enthusiast with a background in Electronics and Communication Engineering. He has experience in Quantum Algorithms, Quantum Machine Learning, and Quantum Cryptography.
