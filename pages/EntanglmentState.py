@@ -180,18 +180,24 @@ For more information on GHZ states and their applications in quantum computing, 
 * [Quantum Computation and Quantum Information by Nielsen and Chuang](https://www.cambridge.org/core/books/quantum-computation-and-quantum-information/32FF2C291D47663B620ACC486C74F926)
 """)
 # ################################### About the author #########################################
-st.sidebar.header("About the Author")
+st.subheader("About the Author")
 
-st.sidebar.image('../images/Gaurang-Belekar.png', caption='Gaurang Belekar')
+st.image('../images/Gaurang-Belekar.png', caption='Gaurang Belekar',width =200)
 
-st.sidebar.markdown("""
+# st.sidebar.markdown("""
+# Gaurang Belekar is a Quantum Computing enthusiast with a background in Electronics and Communication Engineering. He has experience in Quantum Algorithms, Quantum Machine Learning, and Quantum Cryptography.
+# """)
+
+st.write("""
 Gaurang Belekar is a Quantum Computing enthusiast with a background in Electronics and Communication Engineering. He has experience in Quantum Algorithms, Quantum Machine Learning, and Quantum Cryptography.
 """)
 
-st.sidebar.markdown("""   
 
-### You can connect with him on:
+st.write("""   
+
+##### You can connect with him on:
                     
 - [GitHub](https://github.com/Gaurang-Belekar)
 - [LinkedIn](https://www.linkedin.com/in/gaurang-belekar-ba27171b7/)
 """)
+
