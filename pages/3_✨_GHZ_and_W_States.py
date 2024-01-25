@@ -73,7 +73,7 @@ if st.button("Generate State"):
 # ################################### Show the Implementation #########################################
 
 st.subheader("Implementation of Entanglement State")
-bv_algo_code = """
+create_ghz_w_state_algo_code = """
 
 # ###############Importing libraries###################
 from qiskit import QuantumCircuit, BasicAer, Aer, execute
@@ -117,12 +117,12 @@ def run_circuit(circuit, provider, backend_name, shots=1024):
 """
 
 
-st.code(bv_algo_code, language="python")
+st.code(create_ghz_w_state_algo_code, language="python")
 
-st.markdown("""
-# Quantum Entanglement Visualization: GHZ and W States
+st.subheader("""Quantum Entanglement Visualization: GHZ and W States""")
 
-### GHZ State Circuit
+st.write("""
+#### GHZ State Circuit
 The `create_ghz_state` function generates a quantum circuit that prepares the GHZ (Greenberger-Horne-Zeilinger) state for a given number of qubits `n`. The GHZ state is a maximally entangled quantum state.
 
 1. `ghz_circuit = QuantumCircuit(n, n)`: Initialize a quantum circuit with `n` qubits and `n` classical bits for measurement.
@@ -137,7 +137,7 @@ The `create_ghz_state` function generates a quantum circuit that prepares the GH
 
 6. Return the prepared GHZ state quantum circuit.
 
-### W State Circuit
+#### W State Circuit
 The `create_w_state` function generates a quantum circuit that prepares the W state for a given number of qubits `n`. The W state is another entangled quantum state.
 
 1. `w_circuit = QuantumCircuit(n, n)`: Initialize a quantum circuit with `n` qubits and `n` classical bits for measurement.
@@ -154,7 +154,7 @@ The `create_w_state` function generates a quantum circuit that prepares the W st
 
 6. Return the prepared W state quantum circuit.
 
-### Running the Circuit
+#### Running the Circuit
 The `run_circuit` function is used to execute a given quantum circuit on a specific quantum backend provided by `provider` and collect measurement results.
 
 1. `backend = provider.get_backend(backend_name)`: Retrieve the desired quantum backend (e.g., a quantum simulator or a real quantum device) from the provider.
@@ -174,30 +174,28 @@ The `run_circuit` function is used to execute a given quantum circuit on a speci
 Please note that you may need to import the necessary modules and libraries (e.g., `QuantumCircuit`, `execute`, `job_monitor`, etc.) from a quantum computing framework such as Qiskit to run this code successfully. Additionally, ensure that you have a valid quantum provider and backend set up.
 """)
 
-st.markdown("""
-For more information on GHZ states and their applications in quantum computing, you can refer to:
+st.write("""
+#### For more information on GHZ states and their applications in quantum computing, you can refer to:
 * [Qiskit Textbook](https://qiskit.org/textbook)
 * [Quantum Computation and Quantum Information by Nielsen and Chuang](https://www.cambridge.org/core/books/quantum-computation-and-quantum-information/32FF2C291D47663B620ACC486C74F926)
 """)
 # ################################### About the author #########################################
 st.subheader("About the Author")
 
-st.image('images/Gaurang-Belekar.png', caption='Gaurang Belekar',width =200)
-
-# st.sidebar.markdown("""
-# Gaurang Belekar is a Quantum Computing enthusiast with a background in Electronics and Communication Engineering. He has experience in Quantum Algorithms, Quantum Machine Learning, and Quantum Cryptography.
-# """)
-
 st.write("""
 Gaurang Belekar is a Quantum Computing enthusiast with a background in Electronics and Communication Engineering. He has experience in Quantum Algorithms, Quantum Machine Learning, and Quantum Cryptography.
 """)
 
+# ############ Socials ############
+c1, c2, c3, c4 = st.columns(4)
+with c1:
+    st.info('**LinkedIn: [Gaurang Belkear](https://www.linkedin.com/in/gaurang-belekar-ba27171b7/)**', icon="🌐")
+with c2:
+    st.info('**GitHub: [@Gaurang-Belekar](https://github.com/Gaurang-Belekar)**', icon="😸")
+with c3:
+    st.info('**Twitter: [@Rakeleb_gnaruag](https://twitter.com/Rakeleb_gnaruag)**', icon="🐤")
+with c4:
+    st.info('**Medium: [@Gaurang-Belekar](https://medium.com/@Gaurang-Belekar/)**', icon="📝")
 
-st.write("""   
 
-##### You can connect with him on:
-                    
-- [GitHub](https://github.com/Gaurang-Belekar)
-- [LinkedIn](https://www.linkedin.com/in/gaurang-belekar-ba27171b7/)
-""")
 
