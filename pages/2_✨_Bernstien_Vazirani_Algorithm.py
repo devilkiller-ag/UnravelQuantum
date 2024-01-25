@@ -139,7 +139,7 @@ if radio_choice == "Enter Your Own Secret Bitstring Here":
     )
 
 
-s = s or generate_secret_bitstring(n)
+s = s if s else generate_secret_bitstring(n)
 
 bv_oracle = BVOracle(n, s)
 bv_circuit = BernsteinVaziraniAlgo(n, bv_oracle)
