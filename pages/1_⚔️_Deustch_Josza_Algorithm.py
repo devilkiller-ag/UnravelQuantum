@@ -144,9 +144,8 @@ selected_provider = st.selectbox("Select Provider", list(providers.keys()))
 backends = providers[selected_provider].backends()
 selected_backend = st.selectbox("Select Backend", list(backends))
 
-if st.button("Run on Simulator"):
-    if selected_provider in providers:
-        run_on_simulator(dj_circuit, providers[selected_provider], str(selected_backend))
+if st.button("Run on Simulator") and selected_provider in providers:
+    run_on_simulator(dj_circuit, providers[selected_provider], str(selected_backend))
 
 # provider_api_key = st.text_input("Enter your IBM Quantum Experience API Key (for real backend)")
 
