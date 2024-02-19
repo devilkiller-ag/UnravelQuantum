@@ -1,4 +1,4 @@
-# ########## Import Initialisation ############
+# ########## Import Initialization ############
 from qiskit import QuantumCircuit, BasicAer, Aer, execute
 from qiskit.visualization import plot_histogram, circuit_drawer
 from qiskit.tools import job_monitor
@@ -13,7 +13,7 @@ from random import choice
 def generate_bitstring(n):
     return "".join(choice("01") for _ in range(n))
 
-def ConstantFunctionOracale(n, output):
+def ConstantFunctionOracle(n, output):
     oracle = QuantumCircuit(n + 1)  # n input qubits, 1 ancillia qubit for |->
     if output == 0:
         return oracle
@@ -58,7 +58,7 @@ def DeustchJoszaAlgo(n, FunctionOracle):
     for qubit in range(n):
         dj_circuit.h(qubit)
 
-    # Put ancilia qubit in state |->
+    # Put ancillia qubit in state |->
     dj_circuit.x(n)
     dj_circuit.h(n)
 
@@ -125,8 +125,8 @@ st.title("Deustch Josza Algorithm")
 n = st.slider("Select the number of qubits (n)", 1, 10, 3)
 st.write(f"Selected number of qubits: {n}")
 
-f0allx = ConstantFunctionOracale(n, 0)
-f1allx = ConstantFunctionOracale(n, 1)
+f0allx = ConstantFunctionOracle(n, 0)
+f1allx = ConstantFunctionOracle(n, 1)
 f01half = BalancedFunctionOracle(n)
 
 functions = {"Constant Function (f(x) = 0)": f0allx, "Constant Function (f(x) = 1)": f1allx, "Balanced Function": f01half}
@@ -157,7 +157,7 @@ if st.button("Run on Simulator") and selected_provider in providers:
 
 # ################################### Show the Implementation #########################################
 dj_algo_code = '''
-def ConstantFunctionOracale(n, output):
+def ConstantFunctionOracle(n, output):
     oracle = QuantumCircuit(n + 1)  # n input qubits, 1 ancillia qubit for |->
     if output == 0:
         return oracle
@@ -202,7 +202,7 @@ def DeustchJoszaAlgo(n, FunctionOracle):
     for qubit in range(n):
         dj_circuit.h(qubit)
 
-    # Put ancilia qubit in state |->
+    # Put ancillia qubit in state |->
     dj_circuit.x(n)
     dj_circuit.h(n)
 
@@ -250,8 +250,8 @@ def run_on_real_backend(circuit, provider_api_key, backend, shots=1024):
     return answer
 
 # Create DJ Circuit
-f0allx = ConstantFunctionOracale(n, 0)
-f1allx = ConstantFunctionOracale(n, 1)
+f0allx = ConstantFunctionOracle(n, 0)
+f1allx = ConstantFunctionOracle(n, 1)
 f01half = BalancedFunctionOracle(n, "101", "101")
 
 dj_circuit = DeustchJoszaAlgo(n, f01half)
@@ -268,12 +268,12 @@ backend = 'ibm_perth'
 # run_on_real_backend(dj_circuit, provider_api_key, backend, shots=1024)
 '''
 
-st.subheader("Implementation of Deustch Jasza Algorithm")
+st.subheader("Implementation of Deustch Josza Algorithm")
 
 st.write("""
 Reference:
- - [Deustch Jasza Algorithm - Qiskit Textbook](https://learn.qiskit.org/course/ch-algorithms/deutsch-jozsa-algorithm)
- - [Deustch Jasza Algorithm - Classiq](https://www.classiq.io/insights/the-deutsch-jozsa-algorithm-explained)
+ - [Deustch Josza Algorithm - Qiskit Textbook](https://learn.qiskit.org/course/ch-algorithms/deutsch-jozsa-algorithm)
+ - [Deustch Josza Algorithm - Classiq](https://www.classiq.io/insights/the-deutsch-jozsa-algorithm-explained)
 """)
 
 st.code(dj_algo_code, language='python')

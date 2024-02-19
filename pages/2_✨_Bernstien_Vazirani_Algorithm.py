@@ -1,4 +1,4 @@
-# ########## Import Initialisation ############
+# ########## Import Initialization ############
 from qiskit import QuantumCircuit, BasicAer, Aer, execute
 from qiskit.visualization import plot_histogram, circuit_drawer
 from qiskit.tools import job_monitor
@@ -19,7 +19,7 @@ def generate_secret_bitstring(n):
 def BVOracle(n, s=""):
     oracle = QuantumCircuit(n + 1)
 
-    s = s if s else generate_secret_bitstring(n)  # the hidden binary string
+    s = s or generate_secret_bitstring(n)  # the hidden binary string
     # print(s)
 
     index = n - 1
