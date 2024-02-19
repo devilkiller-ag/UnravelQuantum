@@ -1,8 +1,10 @@
 # ########## Import Initialization ############
-from qiskit import QuantumCircuit, BasicProvider, Aer, execute
+from qiskit import QuantumCircuit, transpile
+from qiskit.providers.basic_provider import BasicProvider
+from qiskit_aer import AerSimulator
 from qiskit.visualization import plot_histogram, circuit_drawer
-from qiskit.tools import job_monitor
-from qiskit import IBMQ
+from qiskit_ibm_provider.job import job_monitor
+from qiskit_ibm_provider import IBMProvider
 import streamlit as st
 import matplotlib.pyplot as plt
 from random import choice
@@ -65,7 +67,8 @@ def BernsteinVaziraniAlgo(n, bv_oracle):
 
 def RunCircuit(circuit, provider, backend_name, shots=1024):
     backend = provider.get_backend(backend_name)
-    job = execute(circuit, backend=backend, shots=shots)
+    transpiled_circuit = transpile(circuit, backend=backend)
+    job = backend.run(transpiled_circuit, shots=shots)
     results = job.result()
     counts = results.get_counts()
     job_monitor(job)
@@ -84,8 +87,8 @@ def run_on_simulator(circuit, provider, backend):
 
 
 def run_on_real_backend(circuit, provider_api_key, backend):
-    IBMQ.save_account(provider_api_key, overwrite=True)
-    provider = IBMQ.load_account()
+    IBMProvider.save_account(provider_api_key, overwrite=True)
+    provider = IBMProvider()
     # backend = 'ibm_perth'
     answer = RunCircuit(circuit, provider, backend, shots=1024)
     st.subheader("Result Counts:")
@@ -149,9 +152,10 @@ fig, ax = plt.subplots()
 circuit_drawer(bv_circuit, output='mpl', ax=ax) # Display the circuit using Matplotlib
 st.pyplot(fig) # Show the Matplotlib figure in Streamlit
 
-providers = {"Basic Aer": BasicProvider, "Aer": Aer}
+# providers = {"BasicAer": BasicProvider, "AerSimulator": AerSimulator}
+providers = {"BasicAer": BasicProvider}
 selected_provider = st.selectbox("Select Provider", list(providers.keys()))
-backends = providers[selected_provider].backends()
+backends = providers[selected_provider]().backends()
 selected_backend = st.selectbox("Select Backend", list(backends))
 
 if st.button("Run on Simulator"):
@@ -162,17 +166,19 @@ if st.button("Run on Simulator"):
 # provider_api_key = st.text_input("Enter your IBM Quantum Experience API Key (for real backend)")
 
 # if st.button("Run on Real Backend") and provider_api_key:
-#     backends = IBMQ.backends()
+#     backends = IBMProvider.backends()
 #     selected_backend = st.selectbox("Select Backend", list(backends))
 #     run_on_real_backend(bv_circuit, provider_api_key, selected_backend)
 
 # ################################### Show the Implementation #########################################
 bv_algo_code = """
 # Importing libraries
-from qiskit import QuantumCircuit, BasicProvider, Aer, execute
-from qiskit.visualization import plot_histogram
-from qiskit.tools import job_monitor
-from qiskit import IBMQ
+from qiskit import QuantumCircuit, transpile
+from qiskit.providers.basic_provider import BasicProvider
+from qiskit_aer import AerSimulator
+from qiskit.visualization import plot_histogram, circuit_drawer
+from qiskit_ibm_provider.job import job_monitor
+from qiskit_ibm_provider import IBMProvider
 from random import choice
 
 def generate_secret_bitstring(n):
@@ -226,7 +232,8 @@ def BernsteinVaziraniAlgo(n, bv_oracle):
 
 def RunCircuit(circuit, provider, backend_name, shots=1024):
     backend = provider.get_backend(backend_name)
-    job = execute(circuit, backend=backend, shots=shots)
+    transpiled_circuit = transpile(circuit, backend=backend)
+    job = backend.run(transpiled_circuit, shots=shots)
     results = job.result()
     counts = results.get_counts()
     job_monitor(job)
@@ -241,8 +248,8 @@ def run_on_simulator(circuit, provider, backend, shots=1024):
 
 
 def run_on_real_backend(circuit, provider_api_key, backend, shots=1024):
-    IBMQ.save_account(provider_api_key, overwrite=True)
-    provider = IBMQ.load_account()
+    IBMProvider.save_account(provider_api_key, overwrite=True)
+    provider = IBMProvider()
     answer = RunCircuit(circuit, provider, backend, shots)
     plot_histogram(answer)
     return answer
