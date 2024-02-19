@@ -1,5 +1,5 @@
 # ########## Import Initialization ############
-from qiskit import QuantumCircuit, BasicAer, Aer, execute
+from qiskit import QuantumCircuit, BasicProvider, Aer, execute
 from qiskit.visualization import plot_histogram, circuit_drawer
 from qiskit.tools import job_monitor
 from qiskit import IBMQ
@@ -139,7 +139,7 @@ fig, ax = plt.subplots()
 circuit_drawer(dj_circuit, output='mpl', ax=ax) # Display the circuit using Matplotlib
 st.pyplot(fig) # Show the Matplotlib figure in Streamlit
 
-providers = {"Basic Aer": BasicAer, "Aer": Aer}
+providers = {"Basic Aer": BasicProvider, "Aer": Aer}
 selected_provider = st.selectbox("Select Provider", list(providers.keys()))
 backends = providers[selected_provider].backends()
 selected_backend = st.selectbox("Select Backend", list(backends))
@@ -258,7 +258,7 @@ dj_circuit = DeustchJoszaAlgo(n, f01half)
 dj_circuit.draw('mpl')
 
 # Run on the simulator
-provider = BasicAer
+provider = BasicProvider
 backend = 'qasm_simulator'
 run_on_simulator(dj_circuit, provider, backend, shots=1024)
 
